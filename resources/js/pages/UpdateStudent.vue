@@ -18,7 +18,7 @@
          </div>
          <div class="row " style="background-color:#6c7d7c1a">
              <div class="offset-3 p-2" style="color: #28288A">
-                     <form @submit.prevent="addStudent">
+                     <form @submit.prevent="updateStudent">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" v-model="name" class="form-control"  placeholder="Your Name" required>
@@ -32,7 +32,7 @@
                             <input type="text" v-model="phone" class="form-control"  placeholder="Your Phone Number" required>
                         </div>
                         <div class="form-group">
-                            <label for="image">your photo</label>
+                            <label for="image">Your Photo</label>
                             <input type="file" class="form-control-file" @change="takePhoto"  ref="fileInput">
                             <img :src="image" width="100px" alt="">
                         </div>
@@ -41,7 +41,7 @@
                             <label for="password">Password</label>
                             <input type="password" v-model="password" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-block btn-success">Add</button>
+                        <button type="submit" class="btn btn-block btn-success">Update</button>
                     </form>
              </div>
            
@@ -55,6 +55,8 @@
 export default {
     data(){
         return{
+            student:{},
+            id:'',
             name:'',
             email: '',
             phone: '',
@@ -63,11 +65,25 @@ export default {
         }
     },
     mounted(){
-
+        this.getEditStudent(window.location.href.split('/').pop());
     },
     methods:{
-        addStudent(){
-            axios.post("/api/add-student", {
+        getEditStudent(studentId){
+            axios.get('/api/get-edit-student/'+studentId)
+            .then(res => {
+                // console.log(res.data.student);
+                this.student = res.data.student;
+                this.id = this.student.id;
+                this.name = this.student.name;
+                this.email = this.student.email;
+                this.phone = this.student.phone;
+                this.password = this.student.password;
+                this.image = this.student.image;
+            })            
+        },
+        updateStudent(){
+            axios.put("/api/update-student", {
+                id : this.id,
                 name : this.name,
                 email : this.email,
                 phone : this.phone,
@@ -76,8 +92,8 @@ export default {
             })
            .then(res => {
             console.log(res.data.response);
-            if(res.data.response == "success"){ 
-                this.$router.push("/");
+             if(res.data.response == "success"){ 
+                 this.$router.push("/");
               }else{
                   alert(res.data.message);
               }

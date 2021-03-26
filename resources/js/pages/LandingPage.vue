@@ -21,6 +21,7 @@
                          <th>Name</th>
                          <th>Email</th>
                          <th>Phone</th>
+                         <th>Photo</th>
                          <th>Action</th>
                      </tr>
                  </thead>
@@ -31,7 +32,10 @@
                         <td> {{student.phone}}</td>
                         <td> 
                             <img :src="'/storage/images/'+student.image" width="100px" alt="">
-                            update | delete
+                        </td>
+                        <td>
+                             <router-link class="btn text-primary" :to="'/update-student/'+student.id"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></router-link>
+                             <a href="javascript:void(0);" class="btn text-danger" @click="deleteStudent(student.id)" ><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 </tbody>
@@ -61,6 +65,18 @@ export default {
           .catch(err => { 
                 console.log(err);
           });
+        },
+        deleteStudent(id) {
+            if (confirm("Are yor comfirm to delete?")) {
+                axios
+                .delete(`/api/delete-student/${id}`)
+                .then(res => {
+                    this.getStudents();
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            }
         },
     }
 }
