@@ -1,9 +1,9 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-import NewStudent from './pages/NewStudent.vue';
+import NewAccount from './pages/NewAccount.vue';
 import LandingPage from './pages/LandingPage.vue';
-import UpdateStudent from './pages/UpdateStudent.vue';
+import UpdateAccount from './pages/UpdateAccount.vue';
 
 Vue.use(VueRouter);
 
@@ -15,12 +15,12 @@ export default new VueRouter({
       component: LandingPage,
     },
     {
-      path: "/new-student",
-      component: NewStudent,
+      path: "/new-account",
+      component: NewAccount,
     },
     {
-      path: "/update-student/:id",
-      component: UpdateStudent,
+      path: "/update-account/:id",
+      component: UpdateAccount,
     },
   ],
 });

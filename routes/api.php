@@ -17,7 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/add-student', 'App\Http\Controllers\StudentController@addStudent');
-Route::put('/update-student', 'App\Http\Controllers\StudentController@updateStudent');
-Route::get('/get-students', 'App\Http\Controllers\StudentController@getStudents');
-Route::delete('/delete-student/{studentId}', 'App\Http\Controllers\StudentController@deleteStudent');
+Route::post('/new-account', 'App\Http\Controllers\BankAccountController@newAccount');
+Route::put('/update-account', 'App\Http\Controllers\BankAccountController@updateAccount');
+Route::get('/get-accounts', 'App\Http\Controllers\BankAccountController@getAccounts');
+Route::get('/get-edit-account/{id}', 'App\Http\Controllers\BankAccountController@getEditAccount');
+Route::get('/get-organizations', 'App\Http\Controllers\BankAccountController@getOrganizations');
+Route::delete('/delete-account/{Id}', 'App\Http\Controllers\BankAccountController@deleteAccount');
